@@ -1,10 +1,10 @@
 import React from 'react';
-import ProjectList from '../components/listaproyecto';
+import ListaProyectos from '../components/listaproyecto';
 
 const Home = () => {
   return (
     <div>
-      <ProjectList />
+      <ListaProyectos />
     </div>
   );
 };

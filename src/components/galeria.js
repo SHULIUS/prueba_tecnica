@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProjectGallery = () => {
+const Galeria = () => {
   return (
     <div className="mt-4">
       <h3 className="text-lg font-semibold">Galería de Fotos</h3>
@@ -10,4 +10,4 @@ const ProjectGallery = () => {
   );
 };
 
-export default ProjectGallery;
+export default Galeria;

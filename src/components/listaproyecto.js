@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Cartas from './cartas';
-import { getProjects } from '../services/api';
 
-const ProjectList = () => {
+
+const ListaProyectos = () => {
 
   return (
     <div className="container mx-auto p-4">
@@ -16,4 +16,4 @@ const ProjectList = () => {
   );
 };
 
-export default ProjectList;
+export default ListaProyectos;
