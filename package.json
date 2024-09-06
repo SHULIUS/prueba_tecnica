@@ -19,6 +19,7 @@
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
     "sequelize": "^6.37.3",
+    "swiper": "^11.1.12",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

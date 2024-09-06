@@ -12,10 +12,10 @@ app.use(cors());
 app.use('/api', projectRoutes);
 app.use('/api', galeriaRoutes);
 
-// Sincronizar la base de datos con Sequelize y luego iniciar el servidor
+// sincroniza la base de datos y luego inicia el server
 const startServer = async () => {
   try {
-    // Sincroniza los modelos con la base de datos (sin borrar datos existentes)
+    // sincroniza los modelos con la base de datos (sin borrar datos existentes)
     await db.sequelize.sync({ force: false });
 
     console.log('Conexión a la base de datos PostgreSQL establecida y modelos sincronizados.');
@@ -26,7 +26,7 @@ const startServer = async () => {
     });
   } catch (err) {
     console.error('Error al conectar a la base de datos:', err);
-    process.exit(-1); // Salir si no se puede conectar a la base de datos
+    process.exit(-1); 
   }
 };
 
