@@ -1,16 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import Cartas from './cartas';
-
+import axios from 'axios';
 
 const ListaProyectos = () => {
+  const [proyectos, setProyectos] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/proyectos')
+      .then(response => {
+        setProyectos(response.data);
+      })
+      .catch(error => {
+        console.error('Hubo un error al obtener los proyectos:', error);
+      });
+  }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Proyectos Inmobiliarios</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-          <Cartas/>
-       
+    <div className="bg-white">
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900">Proyectos inmobiliarios</h2>
+
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          {proyectos.map((proyecto) => (
+            <div key={proyecto.id} className="group relative">
+              <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                <img
+                  alt={proyecto.imageAlt}
+                  src={proyecto.imageSrc}
+                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                />
+              </div>
+              <div className="mt-4">
+                <h3 className="text-sm text-gray-700">
+                  {proyecto.nombre}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

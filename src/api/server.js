@@ -4,6 +4,7 @@ const cors = require('cors');
 const pool = require('./config/db.inmobiliaria');
 
 const projectRoutes = require('./routes/proyecto.routes');
+const galeriaRoutes = require('./routes/galeria.routes');
 const createTables = require('./models');
 
 const app = express();
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/api', projectRoutes);
-
+app.use('/api' , galeriaRoutes);
 
 const checkDbConnection = async () => {
   try {

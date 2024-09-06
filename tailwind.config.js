@@ -2,9 +2,7 @@
 module.exports = {
   content: [
     './src/index.js',
-    './src/components/cartas.js',
-    './src/components/listaproyecto.js',
-    './src/components/galeria.js',
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},

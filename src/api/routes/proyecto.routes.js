@@ -1,18 +1,13 @@
 const express = require('express');
-const { getAllProjects } = require('../models/proyectos');
 const router = express.Router();
+const ProyectosService = require('../services/proyectos.service');
+const ProyectosController = require('../controllers/proyectos.controller');
 
+const proyectosService = new ProyectosService();
+const proyectosController = new ProyectosController({ ProyectosService: proyectosService });
 
-router.get('/entidades', async (req, res) => {
-  try {
-    const projects = await getAllProjects();
-    res.json(projects);
-  } catch (error) {
-    console.error('Error al obtener los proyectos:', error);
-    res
-    .status(500)
-    .json({ error: 'Error al obtener los proyectos' });
-  }
-});
+router.get('/projects', (req, res) => proyectosController.getAllProjects(req, res));
+router.get('/projects/:id', (req, res) => proyectosController.getProjectById(req, res));
+router.put('/projects/:id', (req, res) => proyectosController.updateProject(req, res));
 
 module.exports = router;
