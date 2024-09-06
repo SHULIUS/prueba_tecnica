@@ -9,6 +9,7 @@ class ProyectosDto {
       pais: proyecto.pais,
       valorizacion: proyecto.valorizacion,
       
+      galeria: proyecto.galerias ? proyecto.galerias.map(g => g.url_imagen) : []
     };
   }
 }
