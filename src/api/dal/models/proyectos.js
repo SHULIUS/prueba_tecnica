@@ -1,31 +1,25 @@
 module.exports = (sequelize, DataTypes) => {
-  const Proyecto = sequelize.define('proyectos', {
-    nombre: {
-      type: DataTypes.STRING,
-      allowNull: false,
+  const Proyecto = sequelize.define(
+    'Proyecto',
+    {
+      nombre: DataTypes.STRING,
+      descripcion: DataTypes.STRING,
+      ciudad: DataTypes.STRING,
+      pais: DataTypes.STRING,
+      valorizacion: DataTypes.INTEGER,
     },
-    descripcion: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    ciudad: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    pais: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    valorizacion: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  }, {
-    timestamps: false,  
-  });
+    {
+      tableName: 'proyectos',
+      timestamps: false,
+    }
+  );
 
-  Proyecto.associate = models => {
-    Proyecto.hasMany(models.galeria, { foreignKey: 'proyecto_id' });
+  Proyecto.associate = function(models) {
+    // cada proyecto tiene muchas imagenes de galeria
+    Proyecto.hasMany(models.Galeria, {
+      foreignKey: 'proyecto_id',
+      as: 'galerias', 
+    });
   };
 
   return Proyecto;

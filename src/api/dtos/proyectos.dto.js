@@ -1,4 +1,3 @@
-
 class ProyectosDto {
   static mapToDto(proyecto) {
     return {
@@ -8,7 +7,6 @@ class ProyectosDto {
       ciudad: proyecto.ciudad,
       pais: proyecto.pais,
       valorizacion: proyecto.valorizacion,
-      
       galeria: proyecto.galerias ? proyecto.galerias.map(g => g.url_imagen) : []
     };
   }

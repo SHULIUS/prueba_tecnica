@@ -3,7 +3,7 @@ const db = require('../dal/models');
 class GaleriaService {
   async getAllImages() {
     try {
-      return await db.Imagen.findAll();
+      return await db.galeria.findAll();
     } catch (error) {
       throw new Error('Error al obtener todas las imágenes: ' + error.message);
     }
@@ -11,7 +11,7 @@ class GaleriaService {
 
   async getImageById(id) {
     try {
-      return await db.Imagen.findByPk(id);
+      return await db.galeria.findByPk(id);
     } catch (error) {
       throw new Error('Error al obtener la imagen por ID: ' + error.message);
     }
@@ -19,7 +19,7 @@ class GaleriaService {
 
   async addImage(data) {
     try {
-      return await db.Imagen.create(data);
+      return await db.galeria.create(data);
     } catch (error) {
       throw new Error('Error al agregar una imagen: ' + error.message);
     }

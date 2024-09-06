@@ -1,22 +1,22 @@
 module.exports = (sequelize, DataTypes) => {
-  const Galeria = sequelize.define('galeria', {
-    url_imagen: {
-      type: DataTypes.STRING,
-      allowNull: true,
+  const Galeria = sequelize.define(
+    'Galeria',
+    {
+      url_imagen: DataTypes.STRING,
+      proyecto_id: DataTypes.INTEGER
     },
-    proyecto_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'proyectos',
-        key: 'id',
-      },
-    },
-  }, {
-    timestamps: false,  // Desactivar timestamps automáticos
-  });
+    {
+      tableName: 'galeria',
+      timestamps: false
+    }
+  );
 
-  Galeria.associate = models => {
-    Galeria.belongsTo(models.proyectos, { foreignKey: 'proyecto_id' });
+  Galeria.associate = function(models) {
+    // cada imagen que hay en galeria le pertecene a un proyecto
+    Galeria.belongsTo(models.Proyecto, {
+      foreignKey: 'proyecto_id',
+      as: 'proyecto'
+    });
   };
 
   return Galeria;

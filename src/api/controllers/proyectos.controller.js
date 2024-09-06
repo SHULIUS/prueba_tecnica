@@ -1,4 +1,3 @@
-// src/api/controllers/proyectos.controller.js
 const ProyectosDto = require('../dtos/proyectos.dto');
 
 class ProyectosController {

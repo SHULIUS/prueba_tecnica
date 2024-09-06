@@ -3,11 +3,12 @@ const db = require('../dal/models');
 class ProyectosService {
   async getAllProjects() {
     try {
-      return await db.proyectos.findAll({
+      return await db.Proyecto.findAll({
         include: [
           {
-            model: db.galeria,
-            attributes: ['url_imagen'] 
+            model: db.Galeria,
+            attributes: ['url_imagen'],
+            as: 'galerias' 
           }
         ],
       });
@@ -18,28 +19,17 @@ class ProyectosService {
 
   async getProjectById(id) {
     try {
-      return await db.proyectos.findByPk(id, {
+      return await db.Proyecto.findByPk(id, {
         include: [
           {
-            model: db.galeria, 
-            attributes: ['url_imagen'] 
+            model: db.Galeria,
+            attributes: ['url_imagen'],
+            as: 'galerias' 
           }
         ],
       });
     } catch (error) {
       throw new Error('Error al obtener el proyecto por ID: ' + error.message);
-    }
-  }
-
-  async updateProject(id, data) {
-    try {
-      const project = await db.proyectos.findByPk(id);
-      if (!project) {
-        throw new Error('Proyecto no encontrado');
-      }
-      return await project.update(data);
-    } catch (error) {
-      throw new Error('Error al actualizar el proyecto: ' + error.message);
     }
   }
 }
