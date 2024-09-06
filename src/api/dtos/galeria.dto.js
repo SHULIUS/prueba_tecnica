@@ -1,9 +1,13 @@
 class GaleriaDto {
-    constructor({ id, url_imagen, proyecto_id }) {
-      this.id = id;
-      this.url_imagen = url_imagen;
-      this.proyecto_id = proyecto_id;
-    }
+  constructor(galeria) {
+    this.id = galeria.id;
+    this.url_imagen = galeria.url_imagen;
+    this.proyectoId = galeria.proyectoId;
   }
-  
-  module.exports = GaleriaDto;
+
+  static mapToDto(galeria) {
+    return new GaleriaDto(galeria);
+  }
+}
+
+module.exports = GaleriaDto;

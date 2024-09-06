@@ -1,4 +1,3 @@
-const mapper = require('automapper-js');
 const ProyectosDto = require('../dtos/proyectos.dto');
 
 class ProyectosController {
@@ -9,7 +8,7 @@ class ProyectosController {
   async getAllProjects(req, res) {
     try {
       let projects = await this._proyectosService.getAllProjects();
-      projects = projects.map(project => mapper(ProyectosDto, project));
+      projects = projects.map(project => ProyectosDto.mapToDto(project));
       res.send({ payload: projects });
     } catch (error) {
       console.error('Error al obtener los proyectos:', error);
@@ -21,7 +20,7 @@ class ProyectosController {
     const { id } = req.params;
     try {
       let project = await this._proyectosService.getProjectById(id);
-      project = mapper(ProyectosDto, project);
+      project = ProyectosDto.mapToDto(project);
       res.send({ payload: project });
     } catch (error) {
       console.error('Error al obtener el proyecto:', error);
@@ -34,7 +33,7 @@ class ProyectosController {
     const { body } = req;
     try {
       const updatedProject = await this._proyectosService.updateProject(id, body);
-      const project = mapper(ProyectosDto, updatedProject);
+      const project = ProyectosDto.mapToDto(updatedProject);
       res.json({ payload: project });
     } catch (error) {
       console.error('Error al actualizar el proyecto:', error);

@@ -1,31 +1,40 @@
-const pool = require('../config/db.inmobiliaria');
+const db = require('../dal/models');
 
 class GaleriaService {
-  async updateImage(id, url_imagen) {
-    const result = await pool.query(`
-      UPDATE galeria
-      SET url_imagen = $1
-      WHERE id = $2 RETURNING *;
-    `, [url_imagen, id]);
-
-    if (result.rowCount === 0) {
-      throw new Error('Imagen no encontrada');
-    }
-    return result.rows[0];
-  }
-
   async getAllImages() {
-    const result = await pool.query('SELECT * FROM galeria');
-    return result.rows;
+    try {
+      return await db.Imagen.findAll();
+    } catch (error) {
+      throw new Error('Error al obtener todas las imágenes: ' + error.message);
+    }
   }
 
-  async getImagesByProjectId(proyecto_id) {
-    const result = await pool.query('SELECT * FROM galeria WHERE proyecto_id = $1', [proyecto_id]);
-
-    if (result.rows.length === 0) {
-      throw new Error('No se encontraron imágenes para este proyecto');
+  async getImageById(id) {
+    try {
+      return await db.Imagen.findByPk(id);
+    } catch (error) {
+      throw new Error('Error al obtener la imagen por ID: ' + error.message);
     }
-    return result.rows;
+  }
+
+  async addImage(data) {
+    try {
+      return await db.Imagen.create(data);
+    } catch (error) {
+      throw new Error('Error al agregar una imagen: ' + error.message);
+    }
+  }
+
+  async updateImage(id, data) {
+    try {
+      const image = await db.Imagen.findByPk(id);
+      if (!image) {
+        throw new Error('Imagen no encontrada');
+      }
+      return await image.update(data);
+    } catch (error) {
+      throw new Error('Error al actualizar la imagen: ' + error.message);
+    }
   }
 }
 

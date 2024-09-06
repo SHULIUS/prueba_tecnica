@@ -1,45 +1,35 @@
-const pool = require('../config/db.inmobiliaria');
+const db = require('../dal/models');  
 
 class ProyectosService {
   async getAllProjects() {
-    const result = await pool.query(`
-      SELECT p.id, p.nombre, p.descripcion, p.ciudad, p.pais, p.valorizacion, 
-      json_agg(json_build_object('url_imagen', g.url_imagen)) AS galeria
-      FROM proyectos p
-      LEFT JOIN galeria g ON p.id = g.proyecto_id
-      GROUP BY p.id;
-    `);
-    return result.rows;
+    try {
+      // Solo se obtiene la información de la tabla 'proyectos'
+      return await db.proyectos.findAll();
+    } catch (error) {
+      throw new Error('Error al obtener todos los proyectos: ' + error.message);
+    }
   }
 
   async getProjectById(id) {
-    const result = await pool.query(`
-      SELECT p.id, p.nombre, p.descripcion, p.ciudad, p.pais, p.valorizacion, 
-      json_agg(json_build_object('url_imagen', g.url_imagen)) AS galeria
-      FROM proyectos p
-      LEFT JOIN galeria g ON p.id = g.proyecto_id
-      WHERE p.id = $1
-      GROUP BY p.id;
-    `, [id]);
-
-    if (result.rows.length === 0) {
-      throw new Error('Proyecto no encontrado');
+    try {
+      // Solo se obtiene la información de un proyecto específico
+      return await db.proyectos.findByPk(id);
+    } catch (error) {
+      throw new Error('Error al obtener el proyecto por ID: ' + error.message);
     }
-    return result.rows[0];
   }
 
   async updateProject(id, data) {
-    const { nombre, descripcion, ciudad, pais, valorizacion } = data;
-    const result = await pool.query(`
-      UPDATE proyectos
-      SET nombre = $1, descripcion = $2, ciudad = $3, pais = $4, valorizacion = $5
-      WHERE id = $6 RETURNING *;
-    `, [nombre, descripcion, ciudad, pais, valorizacion, id]);
-
-    if (result.rowCount === 0) {
-      throw new Error('Proyecto no encontrado');
+    try {
+      const project = await db.proyectos.findByPk(id);
+      if (!project) {
+        throw new Error('Proyecto no encontrado');
+      }
+      // Actualiza el proyecto con los datos proporcionados
+      return await project.update(data);
+    } catch (error) {
+      throw new Error('Error al actualizar el proyecto: ' + error.message);
     }
-    return result.rows[0];
   }
 }
 
